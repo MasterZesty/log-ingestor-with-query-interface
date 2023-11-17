@@ -2,7 +2,7 @@
 
 #### Project Demo
 
-![Project Demo]()
+![Project Demo](https://github.com/MasterZesty/log-ingestor-with-query-interface/blob/ffeae08b03cc207a6010ec697ada831b826b9774/docs/demo/project_demo.gif)
 ## Overview
 This system is designed to efficiently ingest, store, and query vast volumes of log data. It comprises a Log Ingestor responsible for accepting log data over HTTP and a Query Interface that enables users to perform full-text searches and apply filters on various log attributes.
 
@@ -19,7 +19,7 @@ This system is designed to efficiently ingest, store, and query vast volumes of 
    - Ensures scalability to handle high log volumes.
    - Optimizes I/O operations and database write speeds.
 
-![Log Ingestor Demo]()
+![Log Ingestor Demo](https://github.com/MasterZesty/log-ingestor-with-query-interface/blob/ffeae08b03cc207a6010ec697ada831b826b9774/docs/demo/log_ingestor.png)
    
 2. **Query Interface**
    - Offers a user-friendly interface (Web UI/CLI) for full-text search.
@@ -34,7 +34,7 @@ This system is designed to efficiently ingest, store, and query vast volumes of 
        - metadata.parentResourceId
    - Implements efficient search algorithms for quick results.
 
-![Query Interface Demo]()
+![Query Interface Demo](https://github.com/MasterZesty/log-ingestor-with-query-interface/blob/main/docs/demo/query_interface_demo.gif)
 
 
 3. **Advanced Features (To be Implemented...)**
