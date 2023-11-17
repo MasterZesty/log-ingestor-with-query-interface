@@ -39,7 +39,7 @@ This system is designed to efficiently ingest, store, and query vast volumes of 
 
 ### System Architecture Diagram
 
-![System Architecture Diagram](docs\imgs\architecture_v1.0.0.png)
+![System Architecture Diagram](https://github.com/MasterZesty/log-ingestor-with-query-interface/blob/99270e69b6919d0beec3ef1ef5a3e0a9cd428db5/docs/imgs/architecture_v1.0.0.png)
 ### Log Ingestor I - Log Publisher Service
 - Utilizes an HTTP server to receive logs.
 - Parses incoming JSON logs and publishes them to kafka topic.
