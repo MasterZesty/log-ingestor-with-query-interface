@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log Filter</title>
+    <style>
+        .log-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 300px;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+        .log-property {
+            margin-bottom: 10px;
+        }
+        .property-label {
+            font-weight: bold;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="m-4">
+    <h1 class="text-3xl">Query Interface</h1>
+
+    <div class="log-container text-sm">
+        <h4>Please Provide Data for Filter in below format</h4>
+
+        <div class="log-property">
+            <span class="property-label">Level:</span> error
+        </div>
+        <div class="log-property">
+            <span class="property-label">Message:</span> Failed to connect to DB
+        </div>
+        <div class="log-property">
+            <span class="property-label">Resource ID:</span> server-1234
+        </div>
+        <div class="log-property">
+            <span class="property-label">Timestamp:</span> 2023-09-15T08:00:00Z
+        </div>
+        <div class="log-property">
+            <span class="property-label">Trace ID:</span> abc-xyz-123
+        </div>
+        <div class="log-property">
+            <span class="property-label">Span ID:</span> span-456
+        </div>
+        <div class="log-property">
+            <span class="property-label">Commit:</span> 5e5342f
+        </div>
+        <div class="log-property">
+            <span class="property-label">Parent Resource ID:</span> server-0987
+        </div>
+    </div>
+
+
+    <form method="POST" action="/search" onsubmit="return validateSearch()">
+        <label for="searchField" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Search Field:</label>
+        <select id="searchField" name="searchField" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="level">Level</option>
+            <option value="message">Message</option>
+            <option value="resourceId">Resource ID</option>
+            <option value="timestamp">Timestamp</option>
+            <option value="traceId">Trace ID</option>
+            <option value="spanId">Span ID</option>
+            <option value="commit">Commit</option>
+            <option value="parentResourceId">Parent Resource ID</option>
+        </select><br>
+
+        <label for="searchQuery" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter Search Query:</label>
+        <input type="text" id="searchQuery" name="searchQuery" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"><br>
+
+        <input type="submit" value="Search" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+    </form>
+
+    <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Level</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resource ID</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Timestamp</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Trace ID</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Span ID</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Commit</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Parent Resource ID</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for log in logs %}
+            <tr>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.level }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.message }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.resourceId }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.timestamp }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.traceId }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.spanId }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.commit }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ log.parentResourceId }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+
+    <script>
+        function validateSearch() {
+            const searchQuery = document.getElementById('searchQuery').value.trim();
+            if (searchQuery === '') {
+                alert('Please enter a value in the search query field.');
+                return false; // Prevent form submission if the search query is empty
+            }
+            return true; // Allow form submission if the search query is not empty
+        }
+    </script>
+
+    
+</body>
+</html>
