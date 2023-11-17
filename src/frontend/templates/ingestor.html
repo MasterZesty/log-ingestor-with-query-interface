@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Data Validation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-200 p-8">
+
+    <div class="m-4 p-4">
+        <h1 class="text-5xl font-extrabold dark:text-white">Log Ingestor</h1>
+      </div>
+
+    <div class="flex m-4 p-4">
+        <!-- Side panel with default JSON data -->
+        <div class="w-1/3 bg-white p-4 rounded shadow-md">
+            <h1 class="text-xl font-semibold mb-4">Default Data</h1>
+            <pre id="defaultData" class="whitespace-pre-wrap"></pre>
+            <button onclick="sendDefaultData()" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">Send Default Data</button>
+        </div>
+
+        <!-- Main content area for JSON input and validation -->
+        <div class="w-auto ml-4">
+            <div class="max-w-md mx-auto bg-white p-8 rounded shadow-md">
+                <h1 class="text-xl font-semibold mb-4">JSON Data Validation</h1>
+                <textarea id="jsonData" class="w-full h-40 border rounded p-2 mb-4"
+                    placeholder="Enter JSON data here"></textarea>
+                <button onclick="validateAndSend()" class="bg-blue-500 text-white px-4 py-2 rounded">Send</button>
+                <p id="status" class="mt-4 text-green-600 font-semibold">Please enter json data or send default data!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const defaultJsonData = {
+          "level": "error",
+          "message": "Failed to connect to DB",
+            "resourceId": "server-1234",
+          "timestamp": "2023-09-15T08:00:00Z",
+          "traceId": "abc-xyz-123",
+            "spanId": "span-456",
+            "commit": "5e5342f",
+            "metadata": {
+                "parentResourceId": "server-0987"
+            }
+        };
+
+        // Display default data in the side panel
+        document.getElementById('defaultData').innerText = JSON.stringify(defaultJsonData, null, 2);
+
+        function validateAndSend() {
+            const jsonData = document.getElementById('jsonData').value.trim();
+
+            try {
+                const parsedData = JSON.parse(jsonData);
+                // Check if JSON structure is correct
+                if (typeof parsedData === 'object') {
+                    // Send the data to the endpoint
+                    sendData(parsedData);
+                    document.getElementById('status').textContent = 'Data sent successfully!';
+                } else {
+                    document.getElementById('status').textContent = 'Invalid JSON format!';
+                }
+            } catch (error) {
+                document.getElementById('status').textContent = 'Invalid JSON format!';
+            }
+        }
+
+        function sendDefaultData() {
+          sendData(defaultJsonData);
+          document.getElementById('status').textContent = 'Default Data sent successfully!';
+          
+          // Clear the status message after 5 seconds
+          setTimeout(() => {
+              document.getElementById('status').textContent = 'Please enter json data or send default data!';
+          }, 5000); // 5000 milliseconds = 5 seconds
+      }
+
+        function sendData(data) {
+            // Assuming you're using fetch to send data to the endpoint
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data sent:', data);
+                // Handle successful response if needed
+            })
+            .catch(error => {
+                console.error('Error sending data:', error);
+                // Handle errors if the request fails
+            });
+        }
+    </script>
+</body>
+
+</html>

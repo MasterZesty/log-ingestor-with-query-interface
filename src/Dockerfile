@@ -17,7 +17,7 @@ COPY . /src
 EXPOSE 3000
 
 # Define environment variable
-ENV FLASK_APP=app.py
+ENV FLASK_APP=backend.app
 
 # Run app.py when the container launches
 CMD ["flask", "run", "--host=0.0.0.0", "--port=3000"]

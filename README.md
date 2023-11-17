@@ -1,4 +1,8 @@
 # Log Ingestor and Query Interface
+
+#### Project Demo
+
+![Project Demo]()
 ## Overview
 This system is designed to efficiently ingest, store, and query vast volumes of log data. It comprises a Log Ingestor responsible for accepting log data over HTTP and a Query Interface that enables users to perform full-text searches and apply filters on various log attributes.
 
@@ -14,6 +18,8 @@ This system is designed to efficiently ingest, store, and query vast volumes of 
    - Ingests logs in the provided JSON format via HTTP on port `3000`.
    - Ensures scalability to handle high log volumes.
    - Optimizes I/O operations and database write speeds.
+
+![Log Ingestor Demo]()
    
 2. **Query Interface**
    - Offers a user-friendly interface (Web UI/CLI) for full-text search.
@@ -27,6 +33,9 @@ This system is designed to efficiently ingest, store, and query vast volumes of 
        - commit
        - metadata.parentResourceId
    - Implements efficient search algorithms for quick results.
+
+![Query Interface Demo]()
+
 
 3. **Advanced Features (To be Implemented...)**
    - Search within specific date ranges.
@@ -55,7 +64,7 @@ This system is designed to efficiently ingest, store, and query vast volumes of 
 
 ### Database Structure
 - **MYSQL - Relational Database**: Stores structured log data, optimizing for structured queries and joins.
-- **NoSQL Database (e.g., Elasticsearch)**: Facilitates full-text search and complex queries efficiently.
+- **NoSQL Database (e.g., Elasticsearch)**: Facilitates full-text search and complex queries efficiently. (To be implemented...)
 
 ### Scalability and Performance
 - **Scalability**: Implements database sharding for distributing load.
@@ -63,11 +72,52 @@ This system is designed to efficiently ingest, store, and query vast volumes of 
 - **Load Balancing**: Distributes incoming requests across multiple servers for enhanced performance.
 
 ## How to Run the Project
-1. Clone the repository from the GitHub Classroom submission link.
-2. Install necessary dependencies using *instructions provided in the README*.
-3. Run the Log Ingestor and Query Interface components following the *setup instructions*.
-4. Access the Query Interface via the provided URL/endpoint.
-5. Use the interface to perform searches and apply filters on log data.
+
+### Prerequisites
+- docker
+### Installation
+1. Clone the repository
+   ```bash
+   git clone https://github.com/MasterZesty/log-ingestor-with-query-interface.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd log-ingestor-with-query-interface
+   ```
+3. Run
+   ```bash
+   docker-compose up -d
+   ```
+4. Wait for 1-2 mins as it takes some time to create resources by Kafka and MySQL.
+5. To ingest log from ui in browser go to 
+   ```python
+   http://localhost:3000/
+   ```
+6. Start consumer service 
+   ```python
+   http://localhost:3000/consumer
+   ```
+7. To search log in browser go to 
+   ```python
+   http://localhost:3000/search
+   ```
+8. You can also use POST method to send json data to http endpoint
+   ```bash
+   curl --location 'localhost:3000' \
+   --header 'Content-Type: application/json' \
+   --data '{
+   "level": "error",
+   "message": "Failed to connect to DB",
+   "resourceId": "server-1234",
+   "timestamp": "2023-09-15T08:00:00Z",
+   "traceId": "abc-xyz-123",
+   "spanId": "span-456",
+   "commit": "5e5342f",
+   "metadata": {
+      "parentResourceId": "boy server-0987"
+   }
+   }'
+   ```
 
 ## Identified Issues and Future Improvements
 - **Real-time Capabilities**: Enhance real-time log ingestion and search.
