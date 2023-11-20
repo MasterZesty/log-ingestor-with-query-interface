@@ -1,4 +1,4 @@
-'''bash
+```bash
 
 src/
 ├── backend/
@@ -28,7 +28,7 @@ src/
 ├── requirements.txt            # List of project dependencies
 |── run.sh                      # Script to run the application
 └── Dockerfile                  # Dockerfile
-'''
+```
 
 #### run application with
 `flask --app=backend.app run -p 3000`
