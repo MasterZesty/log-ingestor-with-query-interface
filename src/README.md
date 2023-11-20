@@ -1,3 +1,5 @@
+'''bash
+
 src/
 ├── backend/
 │   ├── __init__.py             # Initialization file for the backend
@@ -26,6 +28,7 @@ src/
 ├── requirements.txt            # List of project dependencies
 |── run.sh                      # Script to run the application
 └── Dockerfile                  # Dockerfile
+'''
 
 #### run application with
 `flask --app=backend.app run -p 3000`
